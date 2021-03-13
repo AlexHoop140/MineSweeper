@@ -25,8 +25,13 @@ void init() {
       B[i][j] = 0;
       T[i][j] = 0;
     }
-    B[1][2] = MINE;
-    B[3][1] = MINE;
+    int random = rand() % (4 - 0 + 1);
+    int x = random ;
+    int y = random ;
+    B[x][y] = MINE;
+    int x1 = random % (4);
+    int y1 = random  / (4);
+    B[x1][y1] = MINE;
 }
 
 void count_mines(){
@@ -36,21 +41,21 @@ void count_mines(){
 		{
 			if (B[i][j] != MINE){
 				int cnt = 0;
-				if(i-1>=0 && j-1>=0 && B[i-1][j-1]==MINE)
+				if(i - 1 >= 0 && j - 1 >= 0 && B[i-1][j-1] == MINE)
                     cnt = cnt + 1;
-                if(i-1>=0 && B[i-1][j]==MINE)
+                if(i - 1 >= 0 && B[i-1][j] == MINE)
                     cnt = cnt + 1;
-                if(i-1>=0 && j+1<N && B[i-1][j+1]==MINE)
+                if(i - 1 >= 0 && j + 1 < N && B[i-1][j+1] == MINE)
                     cnt = cnt + 1;
-                if(j-1>=0 && B[i][j-1]==MINE)
+                if(j - 1 >= 0 && B[i][j-1] == MINE)
                     cnt = cnt + 1;
-                if(j+1<N && B[i][j+1]==MINE )
+                if(j + 1 < N && B[i][j+1] == MINE )
                     cnt = cnt + 1;
-                if(i+1<M && j-1>=0 && B[i+1][j-1]==MINE)
+                if(i + 1 < M && j - 1 >= 0 && B[i+1][j-1]==MINE)
                     cnt = cnt + 1;
-                if(i+1<M && B[i+1][j]==MINE)
+                if(i + 1 < M && B[i+1][j] == MINE)
                     cnt = cnt + 1;
-                if(i+1<M && j+1<N && B[i+1][j+1]==MINE)
+                if(i + 1 < M && j + 1 < N && B[i+1][j+1] == MINE)
                     cnt = cnt + 1; 
 			B[i][j] = cnt;
 			}
@@ -112,16 +117,7 @@ void printBoard(int myBoard[][5])
 	return;
 }
 
-bool isValid(int row, int col)
-{
-    // Returns true if row number and column number 
-    // is in range 
-    return (row >= 0) && (row < SIDE) &&
-        (col >= 0) && (col < SIDE);
-}
-
-
-void open_empty_pos(int row, int col) {
+void open_pos(int row, int col) {
 	int i, j;
 	T[row][col] = 1; // Đánh dấu ô đang xét đã được mở
 	if (B[row][col] == 0) { // Nếu ô đang xét trống và có mật độ bằng 0
@@ -129,10 +125,9 @@ void open_empty_pos(int row, int col) {
 		for (i = -1; i < 2; i++) {
 		    for (j = -1; j < 2; j++) {
 				if (i!=0 || j!=0) {
-					if (row + i >= 0 && row + i < 5 && col + j >=0 && col + j < 5) { // Nếu ô nằm trong bàn
+					if (row + i >= 0 && row + i < 5 && col + j >=0 && col + j < 5) { 
 						if (!T[row + i][col + j])
-							// Nếu ô chưa được mở
-							open_empty_pos(row + i, col + j);					}
+							open_pos(row + i, col + j);					}
 				}
 			}
 		}
@@ -154,16 +149,16 @@ int main(int argc, char const *argv[])
 {
 	int r, c;
 	int k = 2;
-	int moveLeft = 5 * 5 - 2;
 	bool gameOver = false;
 	init();
 	count_mines();
+	printMap1();
 
 	while (gameOver == false) {
 		/*Chọn ô cần mở*/
 		makeMove(&r, &c);
 
-		open_empty_pos(r, c);
+		open_pos(r, c);
 			/*Kiểm tra trúng mìn*/
 			if (B[r][c] == MINE){
 				printBoard(B);
@@ -171,7 +166,6 @@ int main(int argc, char const *argv[])
 				gameOver = true;
 			}
 			else{
-				open_empty_pos(r, c);
 				printMap1();
 				if (count_remain() == k) {
 			        printf("You are the winner!\n");
