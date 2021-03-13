@@ -20,18 +20,18 @@ void makeMove(int* x, int* y)
 }
 
 void init() {
-  for (int i = 0; i < M; i++)
-    for (int j = 0; j < N; j++) {
-      B[i][j] = 0;
-      T[i][j] = 0;
-    }
-    int random = rand() % (4 - 0 + 1);
-    int x = random ;
-    int y = random ;
-    B[x][y] = MINE;
-    int x1 = random % (4);
-    int y1 = random  / (4);
-    B[x1][y1] = MINE;
+	for (int i = 0; i < M; i++)
+		for (int j = 0; j < N; j++) {
+      			B[i][j] = 0;
+      			T[i][j] = 0;
+    		}
+	int random = rand() % (4 - 0 + 1);
+	int x = random ;
+  	int y = random ;
+  	B[x][y] = MINE;
+  	int x1 = random % (4);
+  	int y1 = random  / (4);
+  	B[x1][y1] = MINE;
 }
 
 void count_mines(){
@@ -42,22 +42,22 @@ void count_mines(){
 			if (B[i][j] != MINE){
 				int cnt = 0;
 				if(i - 1 >= 0 && j - 1 >= 0 && B[i-1][j-1] == MINE)
-                    cnt = cnt + 1;
-                if(i - 1 >= 0 && B[i-1][j] == MINE)
-                    cnt = cnt + 1;
-                if(i - 1 >= 0 && j + 1 < N && B[i-1][j+1] == MINE)
-                    cnt = cnt + 1;
-                if(j - 1 >= 0 && B[i][j-1] == MINE)
-                    cnt = cnt + 1;
-                if(j + 1 < N && B[i][j+1] == MINE )
-                    cnt = cnt + 1;
-                if(i + 1 < M && j - 1 >= 0 && B[i+1][j-1]==MINE)
-                    cnt = cnt + 1;
-                if(i + 1 < M && B[i+1][j] == MINE)
-                    cnt = cnt + 1;
-                if(i + 1 < M && j + 1 < N && B[i+1][j+1] == MINE)
-                    cnt = cnt + 1; 
-			B[i][j] = cnt;
+                    			cnt = cnt + 1;
+				if(i - 1 >= 0 && B[i-1][j] == MINE)
+				    cnt = cnt + 1;
+				if(i - 1 >= 0 && j + 1 < N && B[i-1][j+1] == MINE)
+				    cnt = cnt + 1;
+				if(j - 1 >= 0 && B[i][j-1] == MINE)
+				    cnt = cnt + 1;
+				if(j + 1 < N && B[i][j+1] == MINE )
+				    cnt = cnt + 1;
+				if(i + 1 < M && j - 1 >= 0 && B[i+1][j-1]==MINE)
+				    cnt = cnt + 1;
+				if(i + 1 < M && B[i+1][j] == MINE)
+				    cnt = cnt + 1;
+				if(i + 1 < M && j + 1 < N && B[i+1][j+1] == MINE)
+				    cnt = cnt + 1; 
+				B[i][j] = cnt;
 			}
 		}
 	}
@@ -125,6 +125,7 @@ void open_pos(int row, int col) {
 		for (i = -1; i < 2; i++) {
 		    for (j = -1; j < 2; j++) {
 				if (i!=0 || j!=0) {
+					// Kiểm tra điều kiện các ô
 					if (row + i >= 0 && row + i < 5 && col + j >=0 && col + j < 5) { 
 						if (!T[row + i][col + j])
 							open_pos(row + i, col + j);					}
@@ -168,13 +169,11 @@ int main(int argc, char const *argv[])
 			else{
 				printMap1();
 				if (count_remain() == k) {
-			        printf("You are the winner!\n");
-			/*kết thúc*/
-			gameOver = true;
-		    };
+			        	printf("You are the winner!\n");
+					/*kết thúc*/
+					gameOver = true;
+		    		};
 
-			/*Đếm ô chưa mở*/
-			/*Kiểm tra kết thúc*/	
 			}
 		}
 	
