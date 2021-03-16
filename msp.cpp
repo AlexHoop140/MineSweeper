@@ -24,14 +24,17 @@ void init() {
 		for (int j = 0; j < N; j++) {
       			B[i][j] = 0;
       			T[i][j] = 0;
-    		}
-	int random = rand() % (4 - 0 + 1);
-	int x = random ;
-  	int y = random ;
-  	B[x][y] = MINE;
-  	int x1 = random % (4);
-  	int y1 = random  / (4);
-  	B[x1][y1] = MINE;
+    	}
+	
+	B[1][2] = MINE;
+	B[3][1] = MINE;
+// 	int random = rand() % (4 - 0 + 1);
+// 	int x = random ;
+//   	int y = random ;
+//   	B[x][y] = MINE;
+//   	int x1 = random % (4);
+//   	int y1 = random  / (4);
+//   	B[x1][y1] = MINE;
 }
 
 void count_mines(){
